@@ -1,0 +1,1 @@
+{"default":{"identifier":"default","description":"Lets the app, loaded from the bridge, show Mac notifications.","remote":{"urls":["http://127.0.0.1:8787/*","http://localhost:8787/*","https://*.ts.net/*"]},"local":true,"windows":["main"],"permissions":["core:default","notification:default"]}}

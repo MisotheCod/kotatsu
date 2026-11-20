@@ -1,0 +1,11 @@
+node_modules
+.next
+out
+dist
+*.db
+*.db-*
+.env
+.env.local
+apps/web/public/version.json
+apps/desktop/src-tauri/target
+apps/web/public/sw.js

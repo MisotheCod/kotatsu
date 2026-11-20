@@ -1,0 +1,10 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Lets the app, loaded from the bridge, show Mac notifications.",
+  "windows": ["main"],
+  "remote": {
+    "urls": ["http://127.0.0.1:8787/*", "http://localhost:8787/*", "https://*.ts.net/*"]
+  },
+  "permissions": ["core:default", "notification:default"]
+}

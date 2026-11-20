@@ -1,0 +1,31 @@
+{
+  "name": "kotatsu",
+  "private": false,
+  "version": "0.11.0",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @kotatsu/bridge & npm run dev -w @kotatsu/web",
+    "dev:bridge": "npm run dev -w @kotatsu/bridge",
+    "dev:web": "npm run dev -w @kotatsu/web",
+    "build": "npm run build -w @kotatsu/web",
+    "start": "npm run start -w @kotatsu/bridge",
+    "typecheck": "npm run typecheck -w @kotatsu/shared && npm run typecheck -w @kotatsu/bridge && npm run typecheck -w @kotatsu/web",
+    "desktop": "npm run dev -w @kotatsu/desktop",
+    "kotatsu": "npm run cli -w @kotatsu/bridge --"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "description": "Your agents in one place, on your own Mac.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/misocod/kotatsu.git"
+  },
+  "bin": {
+    "kotatsu": "bin/kotatsu"
+  }
+}

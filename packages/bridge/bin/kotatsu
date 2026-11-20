@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# kotatsu <command>. Thin wrapper: the real commands live in packages/bridge/src/cli.ts.
+set -euo pipefail
+APP="${KOTATSU_HOME:-$HOME/.kotatsu/app}"
+if [ -d "$APP" ]; then
+  exec npx --prefix "$APP" tsx "$APP/packages/bridge/src/cli.ts" "$@"
+fi
+exec npx --prefix "$(cd "$(dirname "$0")/../../.." && pwd)" tsx "$(cd "$(dirname "$0")/../.." && pwd)/src/cli.ts" "$@"
