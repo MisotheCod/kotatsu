@@ -258,6 +258,7 @@ export type LiveEvent =
   | { type: "metric"; metric: Metric }
   | { type: "agent"; agent: Agent }
   | { type: "agents" }
+  | { type: "channels" }
   | { type: "approval"; approval: Approval }
   | { type: "running"; running: Home["running"] };
 

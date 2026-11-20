@@ -69,6 +69,13 @@ export const channels = {
     return channels.get(cid) ?? channels.create({ id: cid, kind: "direct", name: agents.get(agentId)?.name ?? agentId, agentIds: [agentId] });
   },
 
+  /** Removing an agent takes its direct chat with it, so nothing is left pointing at nobody. */
+  drop(id: string) {
+    if (!channels.get(id)) return;
+    docs.del("channel", id);
+    live.send({ type: "channels" });
+  },
+
   messages(cid: string, before?: string, limit = 60): Message[] {
     return docs.scoped<Message>("message", cid, limit, before).reverse();
   },

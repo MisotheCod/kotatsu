@@ -233,6 +233,14 @@ app.post("/api/agents/:id/pause", async (c) => {
 app.delete("/api/agents/:id", async (c) => {
   const id = c.req.param("id");
   if (!agents.get(id)) return c.json({ error: "No such agent" }, 404);
+  // Take it out of every chat first, then remove its direct chat, then the agent itself.
+  for (const ch of channels.list()) {
+    if (!ch.agentIds.includes(id)) continue;
+    const left = ch.agentIds.filter((a) => a !== id);
+    if (left.length) channels.save({ ...ch, agentIds: left });
+    else channels.drop(ch.id);
+  }
+  channels.drop(`dm-${id}`);
   await agents.remove(id);
   return c.json({ ok: true });
 });
@@ -342,6 +350,9 @@ app.patch("/api/channels/:id", async (c) => {
   const b = await c.req.json<Partial<Pick<Channel, "name" | "logo" | "color" | "archived" | "agentIds" | "description" | "defaultAgentId">>>();
   return c.json(channels.save({ ...ch, ...b }));
 });
+/** Closing a chat for good. Its messages go with it. */
+app.delete("/api/channels/:id", (c) => { channels.drop(c.req.param("id")); return c.json({ ok: true }); });
+
 app.get("/api/channels/:id/messages", (c) => c.json(channels.messages(c.req.param("id"), c.req.query("before"))));
 app.post("/api/channels/:id/messages", async (c) => {
   const { text, agentId, attachments } = await c.req.json<{ text: string; agentId?: string; attachments?: any[] }>();
