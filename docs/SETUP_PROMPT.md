@@ -13,7 +13,7 @@ Paste everything below this line:
 
 ---
 
-You are setting up Kotatsu for me. It is an open source app (github.com/misocod/kotatsu) that puts my AI agents in one place, like a private Slack, with a Home screen that nudges me when something needs me. It runs on this Mac and I use it from my phone and my computer.
+You are setting up Kotatsu for me. It is an open source app (github.com/MisotheCod/kotatsu) that puts my AI agents in one place, like a private Slack, with a Home screen that nudges me when something needs me. It runs on this Mac and I use it from my phone and my computer.
 
 Do the steps in order. Explain each step in one plain sentence before you do it. Ask me before anything that needs my password, and before installing anything. If a step fails, fix it and keep going. Stop and hand it to me only when I have to do something myself, and tell me exactly what to click.
 
@@ -22,7 +22,7 @@ Do the steps in order. Explain each step in one plain sentence before you do it.
 2. Check what I have: Homebrew, Node 22 or newer, Git, Tailscale, and which agents are signed in (Claude Code, Codex, Hermes). Tell me what is missing. Ask before installing it.
 
 3. Install Kotatsu:
-   curl -fsSL https://raw.githubusercontent.com/misocod/kotatsu/main/install.sh | bash
+   curl -fsSL https://raw.githubusercontent.com/MisotheCod/kotatsu/main/install.sh | bash
    Then run kotatsu doctor and fix anything it reports.
 
 4. Keep this Mac awake and running. Ask first, then turn off sleep, turn on wake for network, and turn on restart after a power failure. Check it with kotatsu doctor.

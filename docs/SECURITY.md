@@ -34,4 +34,4 @@ Kotatsu stores no Gmail, Stripe, GitHub or analytics keys. Setup sends a message
 
 ## Reporting a problem
 
-Open an issue at https://github.com/misocod/kotatsu/issues with what you did and what happened. If it is a vulnerability, say so in the title and leave out the details in the first message, so a fix can land before it is public.
+Open an issue at https://github.com/MisotheCod/kotatsu/issues with what you did and what happened. If it is a vulnerability, say so in the title and leave out the details in the first message, so a fix can land before it is public.

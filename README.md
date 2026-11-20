@@ -13,7 +13,7 @@ Kotatsu runs on a Mac that stays on. You reach it from your phone and your compu
 ## Install
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/misocod/kotatsu/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/MisotheCod/kotatsu/main/install.sh | bash
 ```
 
 That checks the Mac, installs Node 22 if it is missing, puts Kotatsu in `~/.kotatsu/app`, starts it at login, and opens setup. Setup asks your name, finds your agents, and shows you a QR code for your phone.

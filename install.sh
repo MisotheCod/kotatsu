@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Kotatsu installer. Safe to read before you run it.
-#   curl -fsSL https://raw.githubusercontent.com/misocod/kotatsu/main/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/MisotheCod/kotatsu/main/install.sh | bash
 #
 # What it does: checks this Mac, installs Node 22 with Homebrew when missing (asks first),
 # clones into ~/.kotatsu/app, builds, writes your config and a launch agent, starts it,
@@ -10,7 +10,7 @@
 set -euo pipefail
 
 APP_DIR="${KOTATSU_HOME:-$HOME/.kotatsu/app}"
-REPO="${KOTATSU_REPO:-https://github.com/misocod/kotatsu.git}"
+REPO="${KOTATSU_REPO:-https://github.com/MisotheCod/kotatsu.git}"
 LABEL="app.kotatsu.bridge"
 PLIST="$HOME/Library/LaunchAgents/$LABEL.plist"
 DATA="$HOME/Library/Application Support/Kotatsu"
