@@ -91,7 +91,10 @@ switch (cmd) {
     const host = tryRun("curl", ["-s", `http://127.0.0.1:${config.port}/api/host`]);
     rows.push([Boolean(host), "Bridge is answering", `launchctl kickstart -k gui/${uid}/${LABEL}`]);
 
-    rows.push([Boolean(tryRun("tailscale", ["status"])), "Tailscale is running", "Open Tailscale and sign in"]);
+    // Tailscale ships as an app, so its binary is not always on PATH.
+    const tsBin = tryRun("/usr/bin/which", ["tailscale"]) || "/Applications/Tailscale.app/Contents/MacOS/Tailscale";
+    const tsUp = Boolean(tryRun(tsBin, ["status"]));
+    rows.push([tsUp, "Tailscale is running", "Open Tailscale and sign in"]);
 
     rows.push([Boolean(config.vapid.privateKey), "Push keys exist", "kotatsu vapid, then restart the bridge"]);
 
