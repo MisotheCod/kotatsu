@@ -4,7 +4,7 @@
 import { existsSync, readdirSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
-import { execFileSync } from "node:child_process";
+import { execFile, execFileSync } from "node:child_process";
 
 export type Found = {
   runtime: "hermes" | "claude" | "codex";
@@ -32,6 +32,13 @@ function run(file: string, argv: string[]) {
   }
 }
 
+/** Same, without blocking: one slow sign in check must not hold up the other two. */
+function runAsync(file: string, argv: string[], timeout = 4000): Promise<string> {
+  return new Promise((resolve) => {
+    execFile(file, argv, { encoding: "utf8", timeout }, (err, stdout) => resolve(err ? "" : String(stdout).trim()));
+  });
+}
+
 /** Hermes keeps one folder per profile. A profile with a config is a profile an agent can use. */
 function hermesProfiles(): string[] {
   const home = join(homedir(), ".hermes");
@@ -46,7 +53,7 @@ function hermesProfiles(): string[] {
   return out;
 }
 
-export function detectAgents(): Found[] {
+export async function detectAgents(): Promise<Found[]> {
   const found: Found[] = [];
 
   const profiles = hermesProfiles();
@@ -64,7 +71,12 @@ export function detectAgents(): Found[] {
   });
 
   const claudeBin = which("claude");
-  const claudeAuth = claudeBin ? run("claude", ["-p", "say ok"]) : "";
+  const codexBin = which("codex");
+  // Both sign in checks run at the same time, so the list arrives in about one check, not three.
+  const [claudeAuth, codexAuth] = await Promise.all([
+    claudeBin ? runAsync("claude", ["-p", "say ok"]) : Promise.resolve(""),
+    codexBin ? runAsync("codex", ["login", "status"]) : Promise.resolve(""),
+  ]);
   found.push({
     runtime: "claude",
     label: "Claude Code",
@@ -76,8 +88,6 @@ export function detectAgents(): Found[] {
         : undefined,
   });
 
-  const codexBin = which("codex");
-  const codexAuth = codexBin ? run("codex", ["login", "status"]) : "";
   found.push({
     runtime: "codex",
     label: "Codex",

@@ -184,7 +184,14 @@ app.get("/api/agents", (c) => c.json(agents.list()));
  * What is actually on this Mac. Every row says ready, or the one thing standing in the way,
  * so the app can say "Run claude once to sign in" instead of failing later.
  */
-app.get("/api/agents/detect", (c) => c.json(detectAgents()));
+let detectCache: { at: number; list: Awaited<ReturnType<typeof detectAgents>> } | null = null;
+app.get("/api/agents/detect", async (c) => {
+  // Sign in checks cost a second or two, so one answer covers the next minute of taps.
+  if (detectCache && Date.now() - detectCache.at < 60_000) return c.json(detectCache.list);
+  const list = await detectAgents();
+  detectCache = { at: Date.now(), list };
+  return c.json(list);
+});
 
 /** Adds an agent while the bridge runs. Its adapter starts immediately, no restart. */
 app.post("/api/agents", async (c) => {
